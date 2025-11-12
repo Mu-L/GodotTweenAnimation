@@ -12,3 +12,8 @@ config_version=5
 
 config/name="Tween Animation"
 config/features=PackedStringArray("4.5", "Forward Plus")
+config/icon="uid://b45twlbiko1sk"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/TweenAnimation/plugin.cfg", "res://addons/tween_animation/plugin.cfg")

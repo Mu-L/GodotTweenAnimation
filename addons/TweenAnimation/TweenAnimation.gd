@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/tween_animation/icon.png")
+@icon("res://addons/TweenAnimation/icon.png")
 class_name TweenAnimation extends Node
 
 @export var node: Node:
