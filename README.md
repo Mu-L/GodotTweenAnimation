@@ -7,6 +7,7 @@
 * You can view the Tween effects in real-time in the editor.
 * Easily and quickly adjust the order and effects of multiple complex Tweens without modifying code.
 * Multiple Tween Nodes can be saved as scenes for reuse.
+* Supports Tween replay for easy UI animation creation.
 ## Usage
 1. Install the plugin by placing the folder in your Godot project's addons/ directory
 2. Enable the plugin in Project > Project Settings > Plugins
