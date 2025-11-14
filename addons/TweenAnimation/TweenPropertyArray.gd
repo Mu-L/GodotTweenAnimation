@@ -8,15 +8,15 @@ class_name TweenPropertyArray extends TweenProperty
 	print(final_value)
 	notify_property_list_changed()
 
-func create_tweenr(tween: Tween, is_play_back: bool = false):
+func create_property_tweenr(tween: Tween, is_play_back: bool = false):
 	var subtween = create_tween()
 	tween.tween_subtween(subtween)
 	var from = from_value
 	var value_indexs: Array = range(0, final_values.size()) if not is_play_back else range(final_values.size() - 1, -1, -1)
-	var tween_duration := duration
+	var tween_duration := duration / final_values.size()
 	if is_play_back:
 		if custom_playback:
-			tween_duration = playback_duration
+			tween_duration = playback_duration / final_values.size()
 		else:
 			tween_duration /= 2
 	elif from_value == null:
@@ -25,11 +25,10 @@ func create_tweenr(tween: Tween, is_play_back: bool = false):
 		var to = final_values[index]
 		subtween.tween_property(node, property, to, tween_duration)
 	if is_play_back:
-		subtween.tween_property(node, property, from, duration)
+		subtween.tween_property(node, property, from, tween_duration)
 	var is_custom_playback := is_play_back and custom_playback
 	subtween.set_trans(transition_type if not is_custom_playback else playback_transition_type)
 	subtween.set_ease(ease_type if not is_custom_playback else playback_ease_type)
-	super.create_tweenr(tween, is_play_back)
 
 func _validate_property(p: Dictionary):
 	super._validate_property(p)

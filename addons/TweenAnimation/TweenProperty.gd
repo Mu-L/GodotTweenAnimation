@@ -60,7 +60,7 @@ func _to_string():
 	else:
 		return super._to_string()
 
-func create_tweenr(tween: Tween, is_play_back: bool = false):
+func create_property_tweenr(tween: Tween, is_play_back: bool = false):
 	var tween_value = final_value if not is_play_back else from_value
 	var tween_duration := duration
 	if is_play_back:
@@ -74,6 +74,9 @@ func create_tweenr(tween: Tween, is_play_back: bool = false):
 	var tweener = tween.tween_property(node, property, tween_value, tween_duration)
 	tweener.set_trans(transition_type if not is_custom_playback else playback_transition_type)
 	tweener.set_ease(ease_type if not is_custom_playback else playback_ease_type)
+
+func create_tweenr(tween: Tween, is_play_back: bool = false):
+	create_property_tweenr(tween, is_play_back)
 	super.create_tweenr(tween, is_play_back)
 
 func _validate_property(p: Dictionary):
