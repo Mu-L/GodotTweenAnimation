@@ -1,6 +1,15 @@
 @tool
 class_name TweenProperty extends TweenAnimation
 
+@export var node: Node:
+	get():
+		if not node:
+			var parent = get_parent()
+			while parent is TweenAnimation:
+				parent = parent.get_parent()
+			node = parent
+		return node
+
 @export var property: String = "position:x"
 
 @export_tool_button("Select Property") var select_property := func():
@@ -22,9 +31,9 @@ class_name TweenProperty extends TweenAnimation
 
 @export var duration: float = 0.5
 
-@export var transition_type: Tween.TransitionType = Tween.TRANS_BACK
+@export var transition_type: Tween.TransitionType = Tween.TRANS_SINE
 
-@export var ease_type: Tween.EaseType = Tween.EaseType.EASE_OUT
+@export var ease_type: Tween.EaseType = Tween.EaseType.EASE_IN_OUT
 
 @export_group("Playback")
 
@@ -38,9 +47,9 @@ class_name TweenProperty extends TweenAnimation
 
 @export var playback_duration: float = 0.2
 
-@export var playback_transition_type: Tween.TransitionType = Tween.TRANS_BACK
+@export var playback_transition_type: Tween.TransitionType = Tween.TRANS_SINE
 
-@export var playback_ease_type: Tween.EaseType = Tween.EaseType.EASE_OUT
+@export var playback_ease_type: Tween.EaseType = Tween.EaseType.EASE_IN_OUT
 
 func _get_value():
 	return node.get_indexed(property)
@@ -51,7 +60,7 @@ func _to_string():
 	else:
 		return super._to_string()
 
-func create_tweenr(root_tween: Tween, is_play_back: bool = false):
+func create_tweenr(tween: Tween, is_play_back: bool = false):
 	var tween_value = final_value if not is_play_back else from_value
 	var tween_duration := duration
 	if is_play_back:
@@ -62,13 +71,12 @@ func create_tweenr(root_tween: Tween, is_play_back: bool = false):
 	elif from_value == null:
 		from_value = _get_value()
 	var is_custom_playback := is_play_back and custom_playback
-	var tweener = root_tween.tween_property(node, property, tween_value, tween_duration)
+	var tweener = tween.tween_property(node, property, tween_value, tween_duration)
 	tweener.set_trans(transition_type if not is_custom_playback else playback_transition_type)
 	tweener.set_ease(ease_type if not is_custom_playback else playback_ease_type)
-	super.create_tweenr(root_tween, is_play_back)
+	super.create_tweenr(tween, is_play_back)
 
 func _validate_property(p: Dictionary):
-	name = _to_string()
 	var p_name: String = p.name
 	if p_name.begins_with("playback_") and not custom_playback:
 		p.usage = PROPERTY_USAGE_NO_EDITOR
