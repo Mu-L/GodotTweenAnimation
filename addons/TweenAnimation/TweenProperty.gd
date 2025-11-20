@@ -12,15 +12,33 @@ class_name TweenProperty extends TweenAnimation
 
 @export var property: String = "position:x"
 
+static var popup_property_selector: RefCounted:
+	get():
+		if not popup_property_selector:
+			var script = GDScript.new()
+			script.source_code = "
+extends EditorScript
+var node:Node
+var callback:Callable
+func run():
+	EditorInterface.popup_property_selector(node, callback)
+			"
+			script.reload()
+			popup_property_selector = script.new()
+		return popup_property_selector
+
 @export_tool_button("Select Property") var select_property := func():
-	EditorInterface.popup_property_selector(node, func(property_path):
-		if property_path:
-			property = property_path
-			final_value = _get_value()
-			from_value = _get_value()
-			print(final_value)
-			notify_property_list_changed()
-	)
+	if Engine.is_editor_hint():
+		popup_property_selector.node = node
+		popup_property_selector.callback = func(property_path):
+			if property_path:
+				property = property_path
+				final_value = _get_value()
+				from_value = _get_value()
+				print(final_value)
+				notify_property_list_changed()
+		popup_property_selector.run()
+
 
 @export var final_value: Variant
 
