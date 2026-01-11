@@ -42,10 +42,10 @@ func run():
 @export var frequency: float = 20.0
 
 func _create_tweenr(tween: Tween):
-	var subtween := create_tween()
 	var offset = final_value - from_value
 	var delta := 1 / frequency
-	var cur_time := delta
+	var duration := _get_tween_duration()
+	var cur_time := min(delta, duration)
 	while cur_time < duration:
 		if offset is float:
 			tween.tween_property(node, property, from_value + randf_range(-1, 1) * offset, delta)
@@ -54,9 +54,5 @@ func _create_tweenr(tween: Tween):
 		if offset is Vector3:
 			tween.tween_property(node, property, from_value + Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1)) * offset, delta)
 		cur_time += delta
-
-	# 最后确保回到原位
-	tween.tween_property(node, property, from_value, delta)
-
-	_set_tweener_curve(tween.tween_subtween(subtween))
+	tween.tween_property(node, property, from_value, duration - cur_time)
 	super._create_tweenr(tween)
