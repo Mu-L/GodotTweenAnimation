@@ -19,13 +19,11 @@ func _create_tweenr(tween: Tween):
 		subtween.tween_property(node, property, to, tween_duration)
 	if is_playback:
 		subtween.tween_property(node, property, from, tween_duration)
-	var is_custom_playback := is_playback and custom_playback
-	subtween.set_trans(transition_type if not is_custom_playback else playback_transition_type)
-	subtween.set_ease(ease_type if not is_custom_playback else playback_ease_type)
+	subtween.set_trans(transition_type)
+	subtween.set_ease(ease_type)
 	_create_child_subtween(tween)
 
 func _validate_property(p: Dictionary):
-	super._validate_property(p)
 	var p_name: String = p.name
 	if p_name == "final_value" or p.name == "set_final_value":
 		p.usage = PROPERTY_USAGE_NO_EDITOR

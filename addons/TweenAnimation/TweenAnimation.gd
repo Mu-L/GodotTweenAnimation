@@ -53,3 +53,18 @@ func _create_child_subtween(tween: Tween):
 		var child_tween: TweenAnimation = get_child(index)
 		child_tween.is_playback = is_playback
 		child_tween._create_tweenr(subtween)
+
+static var popup_property_selector: RefCounted:
+	get():
+		if not popup_property_selector:
+			var script = GDScript.new()
+			script.source_code = "
+extends EditorScript
+var node:Node
+var callback:Callable
+func run():
+	EditorInterface.popup_property_selector(node, callback)
+			"
+			script.reload()
+			popup_property_selector = script.new()
+		return popup_property_selector
