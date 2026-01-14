@@ -25,5 +25,5 @@ func _create_tweenr(tween: Tween):
 
 func _validate_property(p: Dictionary):
 	var p_name: String = p.name
-	if p_name == "final_value" or p.name == "set_final_value":
+	if p_name == "final_value":
 		p.usage = PROPERTY_USAGE_NO_EDITOR
