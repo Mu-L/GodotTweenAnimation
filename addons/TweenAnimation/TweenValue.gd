@@ -28,7 +28,6 @@ func _set_tweener_curve(tweener: Tweener):
 	tweener.set_trans(transition_type)
 	tweener.set_ease(ease_type)
 
-func reset():
-	playback()
-	cur_tween.custom_step(playback_duration)
-	super.reset()
+func reset_value(new_from_value: Variant):
+	from_value = new_from_value
+	reset()

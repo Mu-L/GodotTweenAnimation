@@ -27,3 +27,7 @@ class_name TweenProperty extends TweenValue
 func _create_tweenr(tween: Tween):
 	_set_tweener_curve(tween.tween_property(node, property, _get_tween_final_value(), _get_tween_duration()))
 	super._create_tweenr(tween)
+
+func reset():
+	node.set_indexed(property, from_value)
+	super.reset()
