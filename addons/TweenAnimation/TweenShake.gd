@@ -29,7 +29,7 @@ func _create_tweenr(tween: Tween):
 		if cur_time > last_time:
 			noise_pos += cur_time - last_time
 		last_time = cur_time
-		var scale := (1.0 - p) if not scale_curve else scale_curve.sample(p)
+		var scale := (1.0 - p) if not scale_curve or is_playback else scale_curve.sample(p)
 		if offset is float:
 			node.set_indexed(property, from_value + _get_noise_1d(noise_pos) * offset * scale)
 		if offset is Vector2:
