@@ -43,6 +43,10 @@ func play_loops(loops: int = 0) -> Tween:
 	play().set_loops(loops)
 	return cur_tween
 
+func play_reset() -> Tween:
+	reset()
+	return play()
+
 func play_tween(not_playback: bool) -> Tween:
 	if not_playback:
 		return play()

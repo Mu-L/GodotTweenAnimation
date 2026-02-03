@@ -30,6 +30,8 @@ func _set_tweener_curve(tweener: Tweener):
 	tweener.set_trans(transition_type)
 	tweener.set_ease(ease_type)
 
-func reset_value(new_from_value: Variant):
-	from_value = new_from_value
+func play_from(new_from_value: Variant = null):
+	if new_from_value != null:
+		from_value = new_from_value
 	reset()
+	play()
